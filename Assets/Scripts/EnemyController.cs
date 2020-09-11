@@ -37,11 +37,11 @@ public class EnemyController : MonoBehaviour
         astar = new AStar(map.GetGrid(), this, player);
     }
 
-    public Vector2 GetPositionOnGrid()
+    public Vector2Int GetPositionOnGrid()
     {
         int x = Mathf.FloorToInt(transform.position.x);
         int y = Mathf.FloorToInt(transform.position.y);
 
-        return new Vector2(x, y);
+        return new Vector2Int(x, y);
     }
 }

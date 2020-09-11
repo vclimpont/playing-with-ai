@@ -92,7 +92,6 @@ public class Map : MonoBehaviour
             x = Random.Range(0, GetGrid().GetGridArray().GetLength(0));
             y = Random.Range(0, GetGrid().GetGridArray().GetLength(1));
             distFromPlayer = Mathf.Abs(player.transform.position.x - x) + Mathf.Abs(player.transform.position.y - y);
-            Debug.Log(distFromPlayer);
 
         } while (GetGrid().GetValue(x, y) == 1 || distFromPlayer < enemyMinDistFromPlayer);
 
