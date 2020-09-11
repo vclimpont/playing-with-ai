@@ -13,7 +13,7 @@ public class PlayerCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //SetPositionOnStart();
+
     }
 
     // Update is called once per frame

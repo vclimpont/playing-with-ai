@@ -23,6 +23,7 @@ public class Map : MonoBehaviour
     public float obstacle_freq;
 
     private Grid grid = new Grid(0,0,0);
+    private bool built = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,8 @@ public class Map : MonoBehaviour
         BuildMap();
         SetPlayerPositionOnStart();
         SetEnemyPositionOnStart();
+
+        built = true;
     }
 
     void BuildMap()
@@ -100,6 +103,11 @@ public class Map : MonoBehaviour
     public Grid GetGrid()
     {
         return grid;
+    }
+
+    public bool IsBuilt()
+    {
+        return built;
     }
 
     //void OnDrawGizmos()

@@ -330,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42583bd17c34b747a07b7004b6649b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: {fileID: 1561664300}
   player: {fileID: 581867885}
   speed: 0
   reactionTime: 0
@@ -596,8 +597,8 @@ MonoBehaviour:
   mainCamera: {fileID: 519420031}
   player: {fileID: 581867885}
   enemy: {fileID: 635084980}
-  width: 10
-  height: 10
+  width: 20
+  height: 20
   cellSize: 1
   enemyMinDistFromPlayer: 5
   tilemap: {fileID: 1391629116}
