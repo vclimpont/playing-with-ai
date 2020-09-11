@@ -5,7 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Camera mainCamera = null;
+    [SerializeField] private PlayerCharacter player = null;
 
     public int width;
     public int height;
@@ -29,6 +30,7 @@ public class Map : MonoBehaviour
         mainCamera.orthographicSize = Mathf.Max(width * cellSize / 2, height * cellSize / 2);
 
         BuildMap();
+        SetPlayerPositionOnStart();
     }
 
     void BuildMap()
@@ -43,25 +45,41 @@ public class Map : MonoBehaviour
                 {
                     grid.SetValue(i, j, 1);
                     tilemap.SetTile(new Vector3Int(i, j, 0), t_rock);
-                    Debug.Log(r + " rock");
                 }
                 else if(r < 1f - ((1f - obstacle_freq) / 2))
                 {
                     tilemap.SetTile(new Vector3Int(i, j, 0), t_ground);
-                    Debug.Log(r + " ground");
                 }
                 else if(r < 1f - ((1f - obstacle_freq) / 4))
                 {
                     tilemap.SetTile(new Vector3Int(i, j, 0), t_grass);
-                    Debug.Log(r + " grass");
                 }
                 else
                 {
                     tilemap.SetTile(new Vector3Int(i, j, 0), t_grav);
-                    Debug.Log(r + " grav");
                 }
             }
         }
+    }
+
+    void SetPlayerPositionOnStart()
+    {
+        int x, y;
+
+        do
+        {
+            x = Random.Range(0, GetGrid().GetGridArray().GetLength(0));
+            y = Random.Range(0, GetGrid().GetGridArray().GetLength(1));
+        } while (GetGrid().GetValue(x, y) == 1);
+
+        Vector2 positionOnStart = new Vector2(x,y) + new Vector2(cellSize, cellSize) * 0.5f;
+        player.transform.position = positionOnStart;
+    }
+
+
+    public Grid GetGrid()
+    {
+        return grid;
     }
 
     //void OnDrawGizmos()
