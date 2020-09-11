@@ -7,10 +7,12 @@ public class Map : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera = null;
     [SerializeField] private PlayerCharacter player = null;
+    [SerializeField] private EnemyController enemy = null;
 
     public int width;
     public int height;
     public float cellSize;
+    public int enemyMinDistFromPlayer;
 
     [SerializeField] private Tilemap tilemap = null;
     [SerializeField] private Tile t_ground = null;
@@ -31,6 +33,7 @@ public class Map : MonoBehaviour
 
         BuildMap();
         SetPlayerPositionOnStart();
+        SetEnemyPositionOnStart();
     }
 
     void BuildMap()
@@ -76,6 +79,23 @@ public class Map : MonoBehaviour
         player.transform.position = positionOnStart;
     }
 
+    void SetEnemyPositionOnStart()
+    {
+        int x, y;
+        float distFromPlayer;
+
+        do
+        {
+            x = Random.Range(0, GetGrid().GetGridArray().GetLength(0));
+            y = Random.Range(0, GetGrid().GetGridArray().GetLength(1));
+            distFromPlayer = Mathf.Abs(player.transform.position.x - x) + Mathf.Abs(player.transform.position.y - y);
+            Debug.Log(distFromPlayer);
+
+        } while (GetGrid().GetValue(x, y) == 1 || distFromPlayer < enemyMinDistFromPlayer);
+
+        Vector2 positionOnStart = new Vector2(x, y) + new Vector2(cellSize, cellSize) * 0.5f;
+        enemy.transform.position = positionOnStart;
+    }
 
     public Grid GetGrid()
     {

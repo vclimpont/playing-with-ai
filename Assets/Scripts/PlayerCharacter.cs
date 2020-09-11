@@ -46,4 +46,12 @@ public class PlayerCharacter : MonoBehaviour
         Vector2 positionOnStart = new Vector2(x * map.cellSize, y * map.cellSize);
         transform.position = positionOnStart;
     }
+
+    public Vector2 GetPositionOnGrid()
+    {
+        int x = Mathf.FloorToInt(transform.position.x);
+        int y = Mathf.FloorToInt(transform.position.y);
+
+        return new Vector2(x, y);
+    }
 }
