@@ -1,12 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
 {
+    [SerializeField] private Camera mainCamera;
+
     public int width;
     public int height;
     public float cellSize;
+
+    [SerializeField] private Tilemap tilemap = null;
+    [SerializeField] private Tile t_ground = null;
+    [SerializeField] private Tile t_grass = null;
+    [SerializeField] private Tile t_grav = null;
+    [SerializeField] private Tile t_rock = null;
+
+    public float obstacle_freq;
 
     private Grid grid = new Grid(0,0,0);
 
@@ -14,17 +25,58 @@ public class Map : MonoBehaviour
     void Start()
     {
         grid = new Grid(width, height, cellSize);
+        mainCamera.transform.position = new Vector3(width * cellSize / 2, height * cellSize / 2, -10f);
+        mainCamera.orthographicSize = Mathf.Max(width * cellSize / 2, height * cellSize / 2);
+
+        BuildMap();
     }
 
-    void OnDrawGizmos()
+    void BuildMap()
     {
         for (int i = 0; i < grid.GetGridArray().GetLength(0); i++)
         {
             for (int j = 0; j < grid.GetGridArray().GetLength(1); j++)
             {
-                Gizmos.DrawCube(grid.GetWorldPosition(i, j), new Vector2(cellSize, cellSize));
+                float r = Random.Range(0f, 1f);
+
+                if (r < obstacle_freq)
+                {
+                    grid.SetValue(i, j, 1);
+                    tilemap.SetTile(new Vector3Int(i, j, 0), t_rock);
+                    Debug.Log(r + " rock");
+                }
+                else if(r < 1f - ((1f - obstacle_freq) / 2))
+                {
+                    tilemap.SetTile(new Vector3Int(i, j, 0), t_ground);
+                    Debug.Log(r + " ground");
+                }
+                else if(r < 1f - ((1f - obstacle_freq) / 4))
+                {
+                    tilemap.SetTile(new Vector3Int(i, j, 0), t_grass);
+                    Debug.Log(r + " grass");
+                }
+                else
+                {
+                    tilemap.SetTile(new Vector3Int(i, j, 0), t_grav);
+                    Debug.Log(r + " grav");
+                }
             }
         }
-
     }
+
+    //void OnDrawGizmos()
+    //{
+    //    for (int i = 0; i < grid.GetGridArray().GetLength(0); i++)
+    //    {
+    //        for (int j = 0; j < grid.GetGridArray().GetLength(1); j++)
+    //        {
+    //            if(grid.GetValue(i,j) == 1)
+    //            {
+    //                Gizmos.color = Color.red;
+    //            }
+    //            Gizmos.DrawSphere(grid.GetWorldPosition(i, j), cellSize / 5f);
+    //        }
+    //    }
+
+    //}
 }

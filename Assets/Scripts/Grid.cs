@@ -22,7 +22,7 @@ public class Grid
         {
             for(int j = 0; j < gridArray.GetLength(1); j++)
             {
-                Debug.Log(i + " " + j + " " + GetWorldPosition(i,j));
+                gridArray[i, j] = 0;
             }
         }
     }
@@ -30,6 +30,16 @@ public class Grid
     public Vector2 GetWorldPosition(int x, int y)
     {
         return new Vector2(x, y) * cellSize;
+    }
+
+    public void SetValue(int x, int y, int value)
+    {
+        gridArray[x, y] = value;
+    }
+
+    public int GetValue(int x, int y)
+    {
+        return gridArray[x, y];
     }
 
     public int[,] GetGridArray()
