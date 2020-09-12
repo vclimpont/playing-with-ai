@@ -10,7 +10,9 @@ public class AStar
     private Vector2Int source;
     private Vector2Int target;
     private Node[,] nodes;
+    private Vector2Int[] path;
     private List<Node> open;
+    private List<Node> pathNodes;
     private Node current;
 
 
@@ -22,15 +24,42 @@ public class AStar
 
         nodes = new Node[grid.GetGridArray().GetLength(0), grid.GetGridArray().GetLength(1)];
         open = new List<Node>();
+        pathNodes = new List<Node>();
 
 
-        Vector2Int enemyPosition = enemy.GetPositionOnGrid();
-        current = new Node(enemyPosition.x, enemyPosition.y, 1, 0, 0, null);    // set current to enemy position
+        source = enemy.GetPositionOnGrid();
+        current = new Node(source.x, source.y, 1, 0, 0, null);    // set current to enemy position
         open.Insert(0, current);                                                // add current as first element of open list
         target = player.GetPositionOnGrid();                                    // target is the player
-        Debug.Log(current.ToString());
 
-        Iterate();
+        while(current.GetPosition() != target)
+        {
+            Iterate();
+        }
+
+        RetracePath();
+
+        for(int i = 0; i < path.Length; i++)
+        {
+            Debug.Log(path[i]);
+        }
+    }
+
+    void RetracePath()
+    {
+        Node pointer = current;
+        while(pointer.GetPosition() != source)
+        {
+            pathNodes.Insert(0, pointer);
+            pointer = pointer.GetParent();
+        }
+
+        path = new Vector2Int[pathNodes.Count];
+
+        for (int i = 0; i < pathNodes.Count; i++)
+        {
+            path[i] = pathNodes[i].GetPosition();
+        }
     }
 
     void Iterate()
@@ -196,7 +225,10 @@ public class AStar
         n.SetGCost(g_cost);
         n.SetHCost(h_cost);
         n.SetFCost(f_cost);
+    }
 
-        Debug.Log(g_cost + " " + h_cost + " " + f_cost);
+    public Vector2Int[] GetPath()
+    {
+        return path;
     }
 }

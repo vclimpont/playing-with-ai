@@ -11,11 +11,13 @@ public class EnemyController : MonoBehaviour
     public float reactionTime;
 
     private AStar astar;
+    private int step;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(InitAStar());
+        step = 0;
     }
 
     // Update is called once per frame
@@ -26,7 +28,30 @@ public class EnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Debug.Log(player.GetPositionOnGrid());
+        MoveEnemy();
+    }
+
+    void MoveEnemy()
+    {
+        float moveForce = speed * Time.deltaTime;
+
+        if (astar != null && astar.GetPath() != null)
+        {
+            Vector2Int[] path = astar.GetPath();
+
+            if(step < path.Length)
+            {
+                Vector2 targetPosition = new Vector2(path[step].x, path[step].y) + new Vector2(map.cellSize, map.cellSize) * 0.5f;
+                if ((Vector2)transform.position != targetPosition)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveForce);
+                }
+                else
+                {
+                    step++;
+                }
+            }
+        }
     }
 
     IEnumerator InitAStar()
