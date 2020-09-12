@@ -13,7 +13,6 @@ public class AStar
     private List<Node> open;
     private Node current;
 
-    private bool foundPlayer;
 
     public AStar(Grid _grid, EnemyController _enemy, PlayerCharacter _player)
     {
@@ -23,13 +22,12 @@ public class AStar
 
         nodes = new Node[grid.GetGridArray().GetLength(0), grid.GetGridArray().GetLength(1)];
         open = new List<Node>();
-        foundPlayer = false;
 
 
         Vector2Int enemyPosition = enemy.GetPositionOnGrid();
-        current = new Node(enemyPosition.x, enemyPosition.y, 1, 0, 0, null);
-        open.Insert(0, current);
-        target = player.GetPositionOnGrid();
+        current = new Node(enemyPosition.x, enemyPosition.y, 1, 0, 0, null);    // set current to enemy position
+        open.Insert(0, current);                                                // add current as first element of open list
+        target = player.GetPositionOnGrid();                                    // target is the player
         Debug.Log(current.ToString());
 
         Iterate();
@@ -38,11 +36,56 @@ public class AStar
     void Iterate()
     {
         current = open[0];
-        open.RemoveAt(0);
-        current.SetState(2);
+        open.RemoveAt(0);                                                       // remove current from open list
+        current.SetState(2);                                                    // set current to closed
 
         Node[] neighbours = SetNeighbours(current.GetPosition().x, current.GetPosition().y);
 
+        SortAndAddOpenNeighbours(neighbours);
+    }
+
+    void SortAndAddOpenNeighbours(Node[] neighbours)
+    {
+        for(int i = 0; i < 8; i++)                                              // for each neighbour
+        {
+            if(neighbours[i] != null)
+            {
+                if(open.Count == 0)
+                {
+                    open.Insert(0, neighbours[i]);
+                }
+                else
+                {
+                    if (open.Contains(neighbours[i]))            // avoid clones
+                    {
+                        open.Remove(neighbours[i]);
+                    }
+
+                    int k = 0;
+
+                    while(k < open.Count && neighbours[i].GetFCost() > open[k].GetFCost())
+                    {
+                        k++;
+                    }
+
+                    if(k < open.Count)
+                    {
+                        open.Insert(k, neighbours[i]);
+                    }
+                    else
+                    {
+                        open.Add(neighbours[i]);
+                    }
+                }
+            }
+        }
+
+        string s = "";
+        foreach (Node n in open)
+        {
+            s += n.GetFCost() + " ";
+        }
+        Debug.Log(s);
     }
 
     Node[] SetNeighbours(int x, int y)
@@ -52,6 +95,39 @@ public class AStar
         if (x + 1 < grid.GetGridArray().GetLength(0))
         {
            neighbours[0] = CheckNodeAt(x + 1, y);
+
+            if (y + 1 < grid.GetGridArray().GetLength(1))
+            {
+                neighbours[1] = CheckNodeAt(x + 1, y + 1);
+            }
+            if (y - 1 >= 0)
+            {
+                neighbours[7] = CheckNodeAt(x + 1, y - 1);
+            }
+        }
+
+        if (x - 1 >= 0)
+        {
+            neighbours[4] = CheckNodeAt(x - 1, y);
+
+            if (y + 1 < grid.GetGridArray().GetLength(1))
+            {
+                neighbours[3] = CheckNodeAt(x - 1, y + 1);
+            }
+            if (y - 1 >= 0)
+            {
+                neighbours[5] = CheckNodeAt(x - 1, y - 1);
+            }
+        }
+
+        if (y + 1 < grid.GetGridArray().GetLength(1))
+        {
+            neighbours[2] = CheckNodeAt(x, y + 1);
+        }
+
+        if (y - 1 >= 0)
+        {
+            neighbours[6] = CheckNodeAt(x, y - 1);
         }
 
         return neighbours;

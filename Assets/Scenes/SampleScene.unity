@@ -606,7 +606,7 @@ MonoBehaviour:
   t_grass: {fileID: 11400000, guid: 7a44197ae698f9747bb4dc504f83e2f7, type: 2}
   t_grav: {fileID: 11400000, guid: 2c9dbf74b1b5aad40b77abd03fc167ff, type: 2}
   t_rock: {fileID: 11400000, guid: 918a65ccb32760a46ac9560ce75916b4, type: 2}
-  obstacle_freq: 0.3
+  obstacle_freq: 0.2
 --- !u!1 &1664300324
 GameObject:
   m_ObjectHideFlags: 0
