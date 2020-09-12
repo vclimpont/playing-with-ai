@@ -194,11 +194,11 @@ public class AStar
 
         if (n.GetPosition().x != src.GetPosition().x && n.GetPosition().y != src.GetPosition().y) // diagonal movement
         {
-            g_cost = n.GetParent().GetGCost() + 14;
+            g_cost = src.GetGCost() + 14;
         }
         else
         {
-            g_cost = n.GetParent().GetGCost() + 10;
+            g_cost = src.GetGCost() + 10;
         }
 
         return g_cost;
@@ -225,6 +225,8 @@ public class AStar
         n.SetGCost(g_cost);
         n.SetHCost(h_cost);
         n.SetFCost(f_cost);
+
+        Debug.Log(n.GetPosition() + " " + n.GetGCost() + " " + n.GetHCost() + " " + n.GetFCost());
     }
 
     public Vector2Int[] GetPath()
