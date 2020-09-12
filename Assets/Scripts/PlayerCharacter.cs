@@ -29,8 +29,33 @@ public class PlayerCharacter : MonoBehaviour
 
     void MovePlayer()
     {
-        Vector2 moveForce = new Vector2(moveInput.x, moveInput.y) * speed * Time.deltaTime;
-        transform.position = new Vector2(transform.position.x + moveForce.x, transform.position.y + moveForce.y);
+        if(CanMoveHere())
+        {
+            Vector2 moveForce = new Vector2(moveInput.x, moveInput.y) * speed * Time.deltaTime;
+            transform.position = new Vector2(transform.position.x + moveForce.x, transform.position.y + moveForce.y);
+        }
+    }
+
+    bool CanMoveHere()
+    {
+        Vector2Int pos = GetPositionOnGrid();
+        int x = pos.x + Mathf.FloorToInt(moveInput.x);
+        int y = pos.y + Mathf.FloorToInt(moveInput.y);
+        Debug.Log(GetPositionOnGrid());
+        Debug.Log(x + " " + y);
+
+        if (x < 0 || x >= map.GetGrid().GetGridArray().GetLength(0) || y < 0 || y >= map.GetGrid().GetGridArray().GetLength(1))
+        {
+            return false;
+        }
+        else if(map.GetGrid().GetGridArray()[x, y] == 1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     void SetPositionOnStart()
