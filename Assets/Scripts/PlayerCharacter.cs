@@ -9,11 +9,16 @@ public class PlayerCharacter : MonoBehaviour
     public float speed;
 
     private Vector2 moveInput;
+    private bool canMove;
+    private Vector2 targetPosition;
+    private int delay;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        canMove = true;
+        targetPosition = transform.position;
+        delay = 0;
     }
 
     // Update is called once per frame
@@ -29,26 +34,42 @@ public class PlayerCharacter : MonoBehaviour
 
     void MovePlayer()
     {
-        if(CanMoveHere())
+        float moveForce = speed * Time.deltaTime;
+
+        if(canMove)
         {
-            Vector2 moveForce = new Vector2(moveInput.x, moveInput.y) * speed * Time.deltaTime;
-            transform.position = new Vector2(transform.position.x + moveForce.x, transform.position.y + moveForce.y);
+            targetPosition = (Vector2)transform.position + new Vector2(moveInput.x, moveInput.y);
+        }
+
+        if (CanMoveHere() && (Vector2)transform.position != targetPosition)
+        {
+            canMove = false;
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveForce);
+        }
+        else
+        {
+            if(delay >= 5)
+            {
+                canMove = true;
+                delay = 0;
+            }
+            else
+            {
+                delay++;
+            }
         }
     }
 
     bool CanMoveHere()
     {
-        Vector2Int pos = GetPositionOnGrid();
-        int x = pos.x + Mathf.FloorToInt(moveInput.x);
-        int y = pos.y + Mathf.FloorToInt(moveInput.y);
-        Debug.Log(GetPositionOnGrid());
-        Debug.Log(x + " " + y);
+        int x = Mathf.FloorToInt(targetPosition.x);
+        int y = Mathf.FloorToInt(targetPosition.y);
 
         if (x < 0 || x >= map.GetGrid().GetGridArray().GetLength(0) || y < 0 || y >= map.GetGrid().GetGridArray().GetLength(1))
         {
             return false;
         }
-        else if(map.GetGrid().GetGridArray()[x, y] == 1)
+        else if (map.GetGrid().GetGridArray()[x, y] == 1)
         {
             return false;
         }

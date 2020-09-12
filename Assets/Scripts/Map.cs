@@ -109,6 +109,11 @@ public class Map : MonoBehaviour
         return built;
     }
 
+    public Tilemap GetTilemap()
+    {
+        return tilemap;
+    }
+
     //void OnDrawGizmos()
     //{
     //    for (int i = 0; i < grid.GetGridArray().GetLength(0); i++)
