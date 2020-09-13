@@ -50,13 +50,11 @@ public class Dijkstra
         }
 
         RetracePath();
-        DisplayPath();
     }
 
     void Iterate()
     {
         ExaminateNeighbours(current.x, current.y);
-        DisplayDistAndParent();
         current = GetMinUnivisited();
         visited[current.x, current.y] = 1;
     }
@@ -184,7 +182,7 @@ public class Dijkstra
         Debug.Log(s);
     }
 
-    Vector2Int[] GetPath()
+    public Vector2Int[] GetPath()
     {
         return path;
     }

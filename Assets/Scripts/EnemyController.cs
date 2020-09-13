@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Map map = null;
     [SerializeField] private PlayerCharacter player = null;
     [SerializeField] private Tilemap tilemap = null;
+    [SerializeField] private bool useAstar = true;
 
     public float speed;
     public float reactionTime;
@@ -20,43 +21,57 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // StartCoroutine(InitAStar());
-        StartCoroutine(InitDijkstra());
+        if(useAstar)
+        {
+            StartCoroutine(InitAStar());
+        }
+        else
+        {
+            StartCoroutine(InitDijkstra());
+        }
         delay = 0;
     }
 
     void FixedUpdate()
     {
-        //MoveEnemy();
+        if(useAstar)
+        {
+            if(astar != null && astar.GetPath() != null)
+            {
+                MoveEnemy(astar.GetPath());
+            }
+        }
+        else
+        {
+            if (dijkstra != null && dijkstra.GetPath() != null)
+            {
+                MoveEnemy(dijkstra.GetPath());
+            }
+        }
     }
 
-    void MoveEnemy()
+    void MoveEnemy(Vector2Int[] path)
     {
         float moveForce = speed * Time.deltaTime;
-        Debug.Log(delay);
-        if (astar != null && astar.GetPath() != null)
-        {
-            Vector2Int[] path = astar.GetPath();
 
-            if(step < path.Length)
+        if(step < path.Length)
+        {
+            if (delay >= reactionTime * 10)
             {
-                if (delay >= reactionTime * 10)
+                Vector2 targetPosition = new Vector2(path[step].x, path[step].y) + new Vector2(map.cellSize, map.cellSize) * 0.5f;
+                if ((Vector2)transform.position != targetPosition)
                 {
-                    Vector2 targetPosition = new Vector2(path[step].x, path[step].y) + new Vector2(map.cellSize, map.cellSize) * 0.5f;
-                    if ((Vector2)transform.position != targetPosition)
-                    {
-                        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveForce);
-                    }
-                    else
-                    {
-                        step++;
-                        delay = 0;
-                    }
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveForce);
                 }
                 else
                 {
-                    delay++;
+                    step++;
+                    delay = 0;
                 }
+            }
+            else
+            {
+                delay++;
             }
         }
     }
@@ -66,7 +81,15 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Waiting for map to be built...");
         yield return new WaitWhile(() => !map.IsBuilt());
 
-        dijkstra = new Dijkstra(map.GetGrid(), this, player);
+        while (true)
+        {
+            dijkstra = new Dijkstra(map.GetGrid(), this, player);
+            ClearPath();
+            ShowPath(dijkstra.GetPath());
+            step = 0;
+            delay = 0;
+            yield return new WaitForSeconds(reactionTime);
+        }
     }
 
     IEnumerator InitAStar()
@@ -78,17 +101,16 @@ public class EnemyController : MonoBehaviour
         {
             astar = new AStar(map.GetGrid(), this, player);
             ClearPath();
-            ShowPath();
+            ShowPath(astar.GetPath());
             step = 0;
             delay = 0;
             yield return new WaitForSeconds(reactionTime);
         }
     }
 
-    void ShowPath()
+    void ShowPath(Vector2Int[] path)
     {
         Tilemap mapTM = map.GetTilemap();
-        Vector2Int[] path = astar.GetPath();
 
         for(int i = 0; i < path.Length; i++)
         {

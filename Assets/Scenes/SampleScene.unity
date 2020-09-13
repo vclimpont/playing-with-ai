@@ -377,6 +377,7 @@ MonoBehaviour:
   map: {fileID: 1561664300}
   player: {fileID: 581867885}
   tilemap: {fileID: 942391222}
+  useAstar: 1
   speed: 4
   reactionTime: 1
 --- !u!212 &635084981
@@ -760,8 +761,8 @@ MonoBehaviour:
   mainCamera: {fileID: 519420031}
   player: {fileID: 581867885}
   enemy: {fileID: 635084980}
-  width: 5
-  height: 5
+  width: 20
+  height: 20
   cellSize: 1
   enemyMinDistFromPlayer: 5
   tilemap: {fileID: 1391629116}

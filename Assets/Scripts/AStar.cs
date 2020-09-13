@@ -39,10 +39,6 @@ public class AStar
 
         RetracePath();
 
-        for(int i = 0; i < path.Length; i++)
-        {
-            Debug.Log(path[i]);
-        }
     }
 
     void RetracePath()
@@ -109,12 +105,6 @@ public class AStar
             }
         }
 
-        string s = "";
-        foreach (Node n in open)
-        {
-            s += n.GetFCost() + " ";
-        }
-        Debug.Log(s);
     }
 
     Node[] SetNeighbours(int x, int y)
@@ -225,8 +215,6 @@ public class AStar
         n.SetGCost(g_cost);
         n.SetHCost(h_cost);
         n.SetFCost(f_cost);
-
-        Debug.Log(n.GetPosition() + " " + n.GetGCost() + " " + n.GetHCost() + " " + n.GetFCost());
     }
 
     public Vector2Int[] GetPath()
