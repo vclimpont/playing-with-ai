@@ -32,6 +32,8 @@ public class Map : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetDifficulty();
+
         grid = new Grid(width, height, cellSize);
         mainCamera.transform.position = new Vector3(width * cellSize / 2, height * cellSize / 2, -10f);
         mainCamera.orthographicSize = Mathf.Max(width * cellSize / 2, height * cellSize / 2);
@@ -39,7 +41,7 @@ public class Map : MonoBehaviour
         BuildMap();
         SetPlayerPositionOnStart();
 
-        for (int i = 0; i < numberOfEnemies; i++)
+        for (int i = 0; i < Mathf.RoundToInt(numberOfEnemies); i++)
         {
             EnemyController enemyController = Instantiate(enemy, new Vector2(0, 0), Quaternion.identity).GetComponentInChildren<EnemyController>();
             SetEnemyPositionOnStart(enemyController);
@@ -50,6 +52,19 @@ public class Map : MonoBehaviour
         SetCoinsPositionOnStart();
 
         built = true;
+    }
+
+    void SetDifficulty()
+    {
+        int up = Level.GetCurrentLevel();
+        numberOfCoins += up;
+        numberOfEnemies += (up * 0.2f);
+        width += up;
+        height += up;
+        if(obstacle_freq < 0.5f)
+        {
+            obstacle_freq += (up * 0.01f);
+        }
     }
 
     void BuildMap()

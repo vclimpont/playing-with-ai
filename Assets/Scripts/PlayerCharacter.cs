@@ -100,13 +100,24 @@ public class PlayerCharacter : MonoBehaviour
         }
           else if (collision.CompareTag("Coin"))
         {
+            GameManager gm = FindObjectOfType<GameManager>();
             collectedCoins++;
-            FindObjectOfType<GameManager>().SetTextCoin(collectedCoins + " / " + map.numberOfCoins);
+            gm.SetTextCoin(collectedCoins + " / " + map.numberOfCoins);
+            Level.SetScore(Level.GetScore() + (10 * Level.GetCurrentLevel()));
+            gm.UpdateTextScore();
             Destroy(collision.gameObject);
+
+            if(collectedCoins == map.numberOfCoins)
+            {
+                FindObjectOfType<ChestSprites>().OpenChest(); 
+            }
         }
           else if (collision.CompareTag("Chest") && collectedCoins == map.numberOfCoins)
         {
-            FindObjectOfType<GameManager>().EndGame();
+            GameManager gm = FindObjectOfType<GameManager>();
+            Level.SetScore(Level.GetScore() + (100 * Level.GetCurrentLevel()));
+            gm.UpdateTextScore();
+            gm.GoToNextLevel();
         }
     }
 }

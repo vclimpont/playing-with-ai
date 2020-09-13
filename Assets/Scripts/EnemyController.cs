@@ -21,6 +21,9 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        speed = Random.Range(speed - 1f, speed + 1f);
+        reactionTime = Random.Range(reactionTime - 0.2f, reactionTime + 0.2f);
+
         map = FindObjectOfType<Map>();
         player = FindObjectOfType<PlayerCharacter>();
 
