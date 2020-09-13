@@ -13,19 +13,21 @@ public class EnemyController : MonoBehaviour
     public float reactionTime;
 
     private AStar astar;
+    private Dijkstra dijkstra;
     private int step;
     private int delay;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(InitAStar());
+       // StartCoroutine(InitAStar());
+        StartCoroutine(InitDijkstra());
         delay = 0;
     }
 
     void FixedUpdate()
     {
-        MoveEnemy();
+        //MoveEnemy();
     }
 
     void MoveEnemy()
@@ -57,6 +59,14 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator InitDijkstra()
+    {
+        Debug.Log("Waiting for map to be built...");
+        yield return new WaitWhile(() => !map.IsBuilt());
+
+        dijkstra = new Dijkstra(map.GetGrid(), this, player);
     }
 
     IEnumerator InitAStar()
