@@ -111,5 +111,14 @@ public class PlayerCharacter : MonoBehaviour
         {
             FindObjectOfType<GameManager>().EndGame();
         }
+          else if (collision.CompareTag("Coin"))
+        {
+            collectedCoins++;
+            Destroy(collision.gameObject);
+        }
+          else if (collision.CompareTag("Chest") && collectedCoins == map.numberOfCoins)
+        {
+            FindObjectOfType<GameManager>().EndGame();
+        }
     }
 }
