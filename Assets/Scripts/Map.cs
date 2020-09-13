@@ -79,16 +79,16 @@ public class Map : MonoBehaviour
 
         for(int i = 0; i < numberOfCoins; i++)
         {
+            do
+            {
+                x = Random.Range(0, GetGrid().GetGridArray().GetLength(0));
+                y = Random.Range(0, GetGrid().GetGridArray().GetLength(1));
+            } while (GetGrid().GetValue(x, y) == 1 || GetGrid().GetValue(x, y) == 2 || GetGrid().GetValue(x, y) == 3 || !CanAccessTo(x, y));
 
+            Vector2 positionOnStart = new Vector2(x, y) + new Vector2(cellSize, cellSize) * 0.5f;
+            Instantiate(coin, positionOnStart, Quaternion.identity);
+            GetGrid().SetValue(x, y, 3);
         }
-        do
-        {
-            x = Random.Range(0, GetGrid().GetGridArray().GetLength(0));
-            y = Random.Range(0, GetGrid().GetGridArray().GetLength(1));
-        } while (GetGrid().GetValue(x, y) == 1 || !CanAccessTo(x, y));
-
-        Vector2 positionOnStart = new Vector2(x, y) + new Vector2(cellSize, cellSize) * 0.5f;
-        chest.transform.position = positionOnStart;
     }
 
     void SetChestPositionOnStart()
@@ -103,21 +103,22 @@ public class Map : MonoBehaviour
 
         Vector2 positionOnStart = new Vector2(x, y) + new Vector2(cellSize, cellSize) * 0.5f;
         chest.transform.position = positionOnStart;
+        GetGrid().SetValue(x, y, 2);
     }
 
     bool CanAccessTo(int x, int y)
     {
         if (x + 1 < grid.GetGridArray().GetLength(0))
         {
-            if(GetGrid().GetValue(x + 1, y) == 0)
+            if(GetGrid().GetValue(x + 1, y) != 1)
             {
                 return true;
             }
-            else if (y + 1 < grid.GetGridArray().GetLength(1) && GetGrid().GetValue(x + 1, y + 1) == 0)
+            else if (y + 1 < grid.GetGridArray().GetLength(1) && GetGrid().GetValue(x + 1, y + 1) != 1)
             {
                 return true;
             }
-            else if (y - 1 >= 0 && GetGrid().GetValue(x + 1, y - 1) == 0)
+            else if (y - 1 >= 0 && GetGrid().GetValue(x + 1, y - 1) != 1)
             {
                 return true;
             }
@@ -125,26 +126,26 @@ public class Map : MonoBehaviour
 
         if (x - 1 >= 0)
         {
-            if (GetGrid().GetValue(x - 1, y) == 0)
+            if (GetGrid().GetValue(x - 1, y) != 1)
             {
                 return true;
             }
-            else if (y + 1 < grid.GetGridArray().GetLength(1) && GetGrid().GetValue(x - 1, y + 1) == 0)
+            else if (y + 1 < grid.GetGridArray().GetLength(1) && GetGrid().GetValue(x - 1, y + 1) != 1)
             {
                 return true;
             }
-            else if (y - 1 >= 0 && GetGrid().GetValue(x - 1, y - 1) == 0)
+            else if (y - 1 >= 0 && GetGrid().GetValue(x - 1, y - 1) != 1)
             {
                 return true;
             }
         }
 
-        if (y + 1 < grid.GetGridArray().GetLength(1) && GetGrid().GetValue(x, y + 1) == 0)
+        if (y + 1 < grid.GetGridArray().GetLength(1) && GetGrid().GetValue(x, y + 1) != 1)
         {
             return true;
         }
 
-        if (y - 1 >= 0 && GetGrid().GetValue(x, y - 1) == 0)
+        if (y - 1 >= 0 && GetGrid().GetValue(x, y - 1) != 1)
         {
             return true;
         }
