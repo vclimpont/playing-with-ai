@@ -100,4 +100,14 @@ public class PlayerCharacter : MonoBehaviour
 
         return new Vector2Int(x, y);
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(collision);
+          if (collision.CompareTag("Enemy"))
+        {
+            FindObjectOfType<GameManager>().EndGame();
+        }
+    }
 }

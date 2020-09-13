@@ -8,11 +8,14 @@ public class Map : MonoBehaviour
     [SerializeField] private Camera mainCamera = null;
     [SerializeField] private PlayerCharacter player = null;
     [SerializeField] private EnemyController enemy = null;
+    [SerializeField] private GameObject chest = null;
+    [SerializeField] private GameObject coin = null;
 
     public int width;
     public int height;
     public float cellSize;
     public int enemyMinDistFromPlayer;
+    public int numberOfCoins;
 
     [SerializeField] private Tilemap tilemap = null;
     [SerializeField] private Tile t_ground = null;
@@ -35,6 +38,7 @@ public class Map : MonoBehaviour
         BuildMap();
         SetPlayerPositionOnStart();
         SetEnemyPositionOnStart();
+        //SetChestPositionOnStart();
 
         built = true;
     }
@@ -113,20 +117,4 @@ public class Map : MonoBehaviour
     {
         return tilemap;
     }
-
-    //void OnDrawGizmos()
-    //{
-    //    for (int i = 0; i < grid.GetGridArray().GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < grid.GetGridArray().GetLength(1); j++)
-    //        {
-    //            if(grid.GetValue(i,j) == 1)
-    //            {
-    //                Gizmos.color = Color.red;
-    //            }
-    //            Gizmos.DrawSphere(grid.GetWorldPosition(i, j), cellSize / 5f);
-    //        }
-    //    }
-
-    //}
 }
