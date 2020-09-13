@@ -232,7 +232,7 @@ MonoBehaviour:
   map: {fileID: 0}
   player: {fileID: 0}
   tilemap: {fileID: 2242812725460609400}
-  useAstar: 0
+  useAstar: 1
   speed: 4
   reactionTime: 1
 --- !u!1 &2242812725460609405

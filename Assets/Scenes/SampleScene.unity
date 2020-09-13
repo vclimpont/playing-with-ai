@@ -164,6 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9e12a8b914913944b525022416dae50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textCoin: {fileID: 671207501}
+  textLevel: {fileID: 459898878}
+  map: {fileID: 1561664300}
 --- !u!1 &365445220
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +280,7 @@ GameObject:
   - component: {fileID: 459898879}
   - component: {fileID: 459898878}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextLevel
   m_TagString: TextLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -579,7 +582,7 @@ GameObject:
   - component: {fileID: 671207502}
   - component: {fileID: 671207501}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextCoin
   m_TagString: TextCoin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -847,18 +850,18 @@ MonoBehaviour:
   enemy: {fileID: 2242812724828307110, guid: f46c95a78bfc7a64990aed4c7f0f8a10, type: 3}
   chest: {fileID: 996492548701152710, guid: 9aa404f44a112a349abfd9cb20f95b4a, type: 3}
   coin: {fileID: 4005441075350021109, guid: 9dcbe8de9d6fdb44a9efa3b83595066c, type: 3}
-  width: 20
-  height: 20
+  width: 10
+  height: 10
   cellSize: 1
   enemyMinDistFromPlayer: 5
-  numberOfCoins: 10
-  numberOfEnemies: 5
+  numberOfCoins: 5
+  numberOfEnemies: 1
   tilemap: {fileID: 1391629116}
   t_ground: {fileID: 11400000, guid: 4c5979ffc3d05334a9db66e237946976, type: 2}
   t_grass: {fileID: 11400000, guid: 7a44197ae698f9747bb4dc504f83e2f7, type: 2}
   t_grav: {fileID: 11400000, guid: 2c9dbf74b1b5aad40b77abd03fc167ff, type: 2}
   t_rock: {fileID: 11400000, guid: 918a65ccb32760a46ac9560ce75916b4, type: 2}
-  obstacle_freq: 0.3
+  obstacle_freq: 0.2
 --- !u!1 &1664300324
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,14 +14,11 @@ public class PlayerCharacter : MonoBehaviour
     private Vector2 targetPosition;
     private int delay;
     private int collectedCoins;
-    private Text coinsText;
 
     // Start is called before the first frame update
     void Start()
     {
         map = FindObjectOfType<Map>();
-        coinsText = GameObject.FindWithTag("TextCoin").GetComponent<Text>();
-        coinsText.text = collectedCoins + " / " + map.numberOfCoins;
 
         canMove = true;
         targetPosition = transform.position;
@@ -104,7 +101,7 @@ public class PlayerCharacter : MonoBehaviour
           else if (collision.CompareTag("Coin"))
         {
             collectedCoins++;
-            coinsText.text = collectedCoins + " / " + map.numberOfCoins;
+            FindObjectOfType<GameManager>().SetTextCoin(collectedCoins + " / " + map.numberOfCoins);
             Destroy(collision.gameObject);
         }
           else if (collision.CompareTag("Chest") && collectedCoins == map.numberOfCoins)
