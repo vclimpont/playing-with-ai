@@ -12,6 +12,7 @@ public class PlayerCharacter : MonoBehaviour
     private bool canMove;
     private Vector2 targetPosition;
     private int delay;
+    private int collectedCoins; 
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class PlayerCharacter : MonoBehaviour
         canMove = true;
         targetPosition = transform.position;
         delay = 0;
+        collectedCoins = 0;
     }
 
     // Update is called once per frame

@@ -38,7 +38,8 @@ public class Map : MonoBehaviour
         BuildMap();
         SetPlayerPositionOnStart();
         SetEnemyPositionOnStart();
-        //SetChestPositionOnStart();
+        SetChestPositionOnStart();
+        SetCoinsPositionOnStart();
 
         built = true;
     }
@@ -70,6 +71,85 @@ public class Map : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SetCoinsPositionOnStart()
+    {
+        int x, y;
+
+        for(int i = 0; i < numberOfCoins; i++)
+        {
+
+        }
+        do
+        {
+            x = Random.Range(0, GetGrid().GetGridArray().GetLength(0));
+            y = Random.Range(0, GetGrid().GetGridArray().GetLength(1));
+        } while (GetGrid().GetValue(x, y) == 1 || !CanAccessTo(x, y));
+
+        Vector2 positionOnStart = new Vector2(x, y) + new Vector2(cellSize, cellSize) * 0.5f;
+        chest.transform.position = positionOnStart;
+    }
+
+    void SetChestPositionOnStart()
+    {
+        int x, y;
+        
+        do
+        {
+            x = Random.Range(0, GetGrid().GetGridArray().GetLength(0));
+            y = Random.Range(0, GetGrid().GetGridArray().GetLength(1));
+        } while (GetGrid().GetValue(x, y) == 1 || !CanAccessTo(x, y));
+
+        Vector2 positionOnStart = new Vector2(x, y) + new Vector2(cellSize, cellSize) * 0.5f;
+        chest.transform.position = positionOnStart;
+    }
+
+    bool CanAccessTo(int x, int y)
+    {
+        if (x + 1 < grid.GetGridArray().GetLength(0))
+        {
+            if(GetGrid().GetValue(x + 1, y) == 0)
+            {
+                return true;
+            }
+            else if (y + 1 < grid.GetGridArray().GetLength(1) && GetGrid().GetValue(x + 1, y + 1) == 0)
+            {
+                return true;
+            }
+            else if (y - 1 >= 0 && GetGrid().GetValue(x + 1, y - 1) == 0)
+            {
+                return true;
+            }
+        }
+
+        if (x - 1 >= 0)
+        {
+            if (GetGrid().GetValue(x - 1, y) == 0)
+            {
+                return true;
+            }
+            else if (y + 1 < grid.GetGridArray().GetLength(1) && GetGrid().GetValue(x - 1, y + 1) == 0)
+            {
+                return true;
+            }
+            else if (y - 1 >= 0 && GetGrid().GetValue(x - 1, y - 1) == 0)
+            {
+                return true;
+            }
+        }
+
+        if (y + 1 < grid.GetGridArray().GetLength(1) && GetGrid().GetValue(x, y + 1) == 0)
+        {
+            return true;
+        }
+
+        if (y - 1 >= 0 && GetGrid().GetValue(x, y - 1) == 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     void SetPlayerPositionOnStart()
