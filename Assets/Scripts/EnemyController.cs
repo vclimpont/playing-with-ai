@@ -21,12 +21,17 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        map = FindObjectOfType<Map>();
+        player = FindObjectOfType<PlayerCharacter>();
+
         if(useAstar)
         {
+            Debug.Log("use A*");
             StartCoroutine(InitAStar());
         }
         else
         {
+            Debug.Log("use Dijkstra");
             StartCoroutine(InitDijkstra());
         }
         delay = 0;

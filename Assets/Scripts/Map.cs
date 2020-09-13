@@ -6,8 +6,8 @@ using UnityEngine.Tilemaps;
 public class Map : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera = null;
-    [SerializeField] private PlayerCharacter player = null;
-    [SerializeField] private EnemyController enemy = null;
+    [SerializeField] private GameObject player = null;
+    [SerializeField] private GameObject enemy = null;
     [SerializeField] private GameObject chest = null;
     [SerializeField] private GameObject coin = null;
 
@@ -15,7 +15,8 @@ public class Map : MonoBehaviour
     public int height;
     public float cellSize;
     public int enemyMinDistFromPlayer;
-    public int numberOfCoins;
+    public float numberOfCoins;
+    public float numberOfEnemies;
 
     [SerializeField] private Tilemap tilemap = null;
     [SerializeField] private Tile t_ground = null;
@@ -37,7 +38,14 @@ public class Map : MonoBehaviour
 
         BuildMap();
         SetPlayerPositionOnStart();
-        SetEnemyPositionOnStart();
+
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            EnemyController enemyController = Instantiate(enemy, new Vector2(0, 0), Quaternion.identity).GetComponentInChildren<EnemyController>();
+            SetEnemyPositionOnStart(enemyController);
+        }
+
+
         SetChestPositionOnStart();
         SetCoinsPositionOnStart();
 
@@ -94,6 +102,7 @@ public class Map : MonoBehaviour
     void SetChestPositionOnStart()
     {
         int x, y;
+        chest = Instantiate(chest, new Vector2(0, 0), Quaternion.identity);
         
         do
         {
@@ -156,6 +165,7 @@ public class Map : MonoBehaviour
     void SetPlayerPositionOnStart()
     {
         int x, y;
+        player = Instantiate(player, new Vector2(0, 0), Quaternion.identity);
 
         do
         {
@@ -167,7 +177,7 @@ public class Map : MonoBehaviour
         player.transform.position = positionOnStart;
     }
 
-    void SetEnemyPositionOnStart()
+    void SetEnemyPositionOnStart(EnemyController enemyController)
     {
         int x, y;
         float distFromPlayer;
@@ -181,7 +191,7 @@ public class Map : MonoBehaviour
         } while (GetGrid().GetValue(x, y) == 1 || distFromPlayer < enemyMinDistFromPlayer);
 
         Vector2 positionOnStart = new Vector2(x, y) + new Vector2(cellSize, cellSize) * 0.5f;
-        enemy.transform.position = positionOnStart;
+        enemyController.transform.position = positionOnStart;
     }
 
     public Grid GetGrid()

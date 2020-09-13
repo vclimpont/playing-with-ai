@@ -17,6 +17,8 @@ public class PlayerCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        map = FindObjectOfType<Map>();
+
         canMove = true;
         targetPosition = transform.position;
         delay = 0;
@@ -81,20 +83,6 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    void SetPositionOnStart()
-    {
-        int x, y;
-
-        do
-        {
-            x = Random.Range(0, map.GetGrid().GetGridArray().GetLength(0));
-            y = Random.Range(0, map.GetGrid().GetGridArray().GetLength(1));
-        } while (map.GetGrid().GetValue(x, y) == 1);
-
-        Vector2 positionOnStart = new Vector2(x * map.cellSize, y * map.cellSize);
-        transform.position = positionOnStart;
-    }
-
     public Vector2Int GetPositionOnGrid()
     {
         int x = Mathf.FloorToInt(transform.position.x);
@@ -103,10 +91,8 @@ public class PlayerCharacter : MonoBehaviour
         return new Vector2Int(x, y);
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision);
           if (collision.CompareTag("Enemy"))
         {
             FindObjectOfType<GameManager>().EndGame();
