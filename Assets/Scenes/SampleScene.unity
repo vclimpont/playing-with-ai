@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 459898878}
   m_Layer: 5
   m_Name: Text
-  m_TagString: Untagged
+  m_TagString: TextLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 671207501}
   m_Layer: 5
   m_Name: Text
-  m_TagString: Untagged
+  m_TagString: TextCoin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -852,7 +852,7 @@ MonoBehaviour:
   cellSize: 1
   enemyMinDistFromPlayer: 5
   numberOfCoins: 10
-  numberOfEnemies: 1
+  numberOfEnemies: 5
   tilemap: {fileID: 1391629116}
   t_ground: {fileID: 11400000, guid: 4c5979ffc3d05334a9db66e237946976, type: 2}
   t_grass: {fileID: 11400000, guid: 7a44197ae698f9747bb4dc504f83e2f7, type: 2}

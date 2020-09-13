@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCharacter : MonoBehaviour
 {
@@ -12,12 +13,15 @@ public class PlayerCharacter : MonoBehaviour
     private bool canMove;
     private Vector2 targetPosition;
     private int delay;
-    private int collectedCoins; 
+    private int collectedCoins;
+    private Text coinsText;
 
     // Start is called before the first frame update
     void Start()
     {
         map = FindObjectOfType<Map>();
+        coinsText = GameObject.FindWithTag("TextCoin").GetComponent<Text>();
+        coinsText.text = collectedCoins + " / " + map.numberOfCoins;
 
         canMove = true;
         targetPosition = transform.position;
@@ -100,6 +104,7 @@ public class PlayerCharacter : MonoBehaviour
           else if (collision.CompareTag("Coin"))
         {
             collectedCoins++;
+            coinsText.text = collectedCoins + " / " + map.numberOfCoins;
             Destroy(collision.gameObject);
         }
           else if (collision.CompareTag("Chest") && collectedCoins == map.numberOfCoins)
