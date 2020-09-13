@@ -35,7 +35,14 @@ public class Dijkstra
         {
             for (int j = 0; j < grid.GetGridArray().GetLength(1); j++)
             {
-                visited[i, j] = grid.GetGridArray()[i, j]; // 0 if not obstacle, 1 overwhise
+                if(grid.GetGridArray()[i, j] == 1)
+                {
+                    visited[i, j] = 1;
+                }
+                else
+                {
+                    visited[i, j] = 0;
+                }
                 dist[i, j] = Mathf.Infinity;
             }
         }
