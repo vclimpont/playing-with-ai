@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = Random.Range(speed - 1f, speed + 1f);
+        speed = Random.Range(speed - 1f, speed + 1f);                                       // randomize speed and reaction time a bit
         reactionTime = Random.Range(reactionTime - 0.2f, reactionTime + 0.2f);
 
         map = FindObjectOfType<Map>();
@@ -64,7 +64,7 @@ public class EnemyController : MonoBehaviour
 
         if(step < path.Length)
         {
-            if (delay >= reactionTime * 10)
+            if (delay >= reactionTime * 10)             // move the enemy after a delay based on reaction time to create a rythmed movement
             {
                 Vector2 targetPosition = new Vector2(path[step].x, path[step].y) + new Vector2(map.cellSize, map.cellSize) * 0.5f;
                 if ((Vector2)transform.position != targetPosition)

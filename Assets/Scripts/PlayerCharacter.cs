@@ -70,11 +70,11 @@ public class PlayerCharacter : MonoBehaviour
         int x = Mathf.FloorToInt(targetPosition.x);
         int y = Mathf.FloorToInt(targetPosition.y);
 
-        if (x < 0 || x >= map.GetGrid().GetGridArray().GetLength(0) || y < 0 || y >= map.GetGrid().GetGridArray().GetLength(1))
+        if (x < 0 || x >= map.GetGrid().GetGridArray().GetLength(0) || y < 0 || y >= map.GetGrid().GetGridArray().GetLength(1))     // outside
         {
             return false;
         }
-        else if (map.GetGrid().GetGridArray()[x, y] == 1)
+        else if (map.GetGrid().GetGridArray()[x, y] == 1)       // it's an obstacle
         {
             return false;
         }

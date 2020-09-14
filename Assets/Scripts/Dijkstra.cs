@@ -37,17 +37,17 @@ public class Dijkstra
             {
                 if(grid.GetGridArray()[i, j] == 1)
                 {
-                    visited[i, j] = 1;
+                    visited[i, j] = 1;              // set obstacles to visited nodes so we don't count them in the process
                 }
                 else
                 {
                     visited[i, j] = 0;
                 }
-                dist[i, j] = Mathf.Infinity;
+                dist[i, j] = Mathf.Infinity;        // set distance of every nodes to Infinity
             }
         }
 
-        current = source;
+        current = source;                           // set current to the enemy position
         visited[current.x, current.y] = 1;
         dist[current.x, current.y] = 0;
 
@@ -93,7 +93,7 @@ public class Dijkstra
         {
             for (int j = 0; j < grid.GetGridArray().GetLength(1); j++)
             {
-                if(visited[i,j] == 0 && dist[i,j] < minDist)
+                if(visited[i,j] == 0 && dist[i,j] < minDist)        // search for the shortest neighbour univisited 
                 {
                     minX = i;
                     minY = j;
@@ -108,7 +108,7 @@ public class Dijkstra
     void ExaminateNeighbours(int x, int y)
     {
 
-        if (x + 1 < grid.GetGridArray().GetLength(0))
+        if (x + 1 < grid.GetGridArray().GetLength(0))           // Check neighbours at every position (8 maximum)
         {
             CheckNeighbourAt(x + 1, y, 10f);
 
@@ -149,14 +149,14 @@ public class Dijkstra
 
     void CheckNeighbourAt(int x, int y, float cost)
     {
-        if (visited[x, y] == 1)
+        if (visited[x, y] == 1)         // if it's already visited or an obstacle
         {
             return;
         }
 
         float distFromSource = dist[current.x, current.y] + cost;
 
-        if(distFromSource < dist[x, y])
+        if(distFromSource < dist[x, y])     // update parent / distance if the distance from current to this neighbour is shorter
         {
             dist[x, y] = distFromSource;
             parent[x, y] = current;

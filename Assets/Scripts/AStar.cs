@@ -32,7 +32,7 @@ public class AStar
         open.Insert(0, current);                                                // add current as first element of open list
         target = player.GetPositionOnGrid();                                    // target is the player
 
-        while(current.GetPosition() != target)
+        while(current.GetPosition() != target)                                  // while we didn't reach the player's position
         {
             Iterate();
         }
@@ -44,7 +44,7 @@ public class AStar
     void RetracePath()
     {
         Node pointer = current;
-        while(pointer.GetPosition() != source)
+        while(pointer.GetPosition() != source)                                  // retrace positions until the source (the enemy position)
         {
             pathNodes.Insert(0, pointer);
             pointer = pointer.GetParent();
@@ -52,7 +52,7 @@ public class AStar
 
         path = new Vector2Int[pathNodes.Count];
 
-        for (int i = 0; i < pathNodes.Count; i++)
+        for (int i = 0; i < pathNodes.Count; i++)                               // build the path
         {
             path[i] = pathNodes[i].GetPosition();
         }
@@ -88,7 +88,7 @@ public class AStar
 
                     int k = 0;
 
-                    while(k < open.Count && neighbours[i].GetFCost() > open[k].GetFCost())
+                    while(k < open.Count && neighbours[i].GetFCost() > open[k].GetFCost())      // search for the shortest neighbour
                     {
                         k++;
                     }
@@ -111,7 +111,7 @@ public class AStar
     {
         Node[] neighbours = new Node[8];
 
-        if (x + 1 < grid.GetGridArray().GetLength(0))
+        if (x + 1 < grid.GetGridArray().GetLength(0))                            // check every neighbours available (8 max)
         {
            neighbours[0] = CheckNodeAt(x + 1, y);
 
@@ -184,11 +184,11 @@ public class AStar
 
         if (n.GetPosition().x != src.GetPosition().x && n.GetPosition().y != src.GetPosition().y) // diagonal movement
         {
-            g_cost = src.GetGCost() + 14;
+            g_cost = src.GetGCost() + 14;           // sqrt(1 + 1) * 10
         }
         else
         {
-            g_cost = src.GetGCost() + 10;
+            g_cost = src.GetGCost() + 10;           // 1 * 10
         }
 
         return g_cost;
