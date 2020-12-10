@@ -14,3 +14,11 @@ Levels are procedurally generated and their difficulty increase over time :
 * The score gained by collecting a gem and completing a level is increase by 10 and 100 respectively.
 
 ![game view](https://github.com/vclimpont/playing-with-ai/blob/master/Image/gameview.PNG)
+
+## Free to use assets
+
+* Jawbreaker - Adam Saltsman : https://adamatomic.itch.io/jawbreaker
+
+* Gems / Coins - La Red Games : https://laredgames.itch.io/gems-coins-free?download
+
+* 16x16 Dungeon Tileset - 0x72 : https://0x72.itch.io/16x16-dungeon-tileset
