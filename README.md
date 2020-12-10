@@ -12,3 +12,5 @@ Levels are procedurally generated and their difficulty increase over time :
 * The number of enemies is increased by 20% per level rounded to the closest integer.
 * The number of gems to collect is increased by 1 per level.
 * The score gained by collecting a gem and completing a level is increase by 10 and 100 respectively.
+
+![game view](https://github.com/vclimpont/playing-with-ai/blob/master/Image/gameview.PNG)
